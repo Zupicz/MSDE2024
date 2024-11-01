@@ -8,6 +8,5 @@ function decimalToTernary(number) {
         intermediateResult = Math.floor(intermediateResult / 3);
     } while (intermediateResult > 0);
 
-    result = Number(remainders.join(''));
-    return result;
+    return Number(remainders.join(''));
 }
