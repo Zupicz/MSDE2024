@@ -1,5 +1,5 @@
-function main(dataIn) {
-    let dataOut = [];
+function main(dtoIn) {
+    let dtoOut = [];
 
     const GENDER_LIST = ["male", "female"];
     const MALE_NAMES_LIST = ["Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Tomáš", "Jaroslav", "Miroslav", "Zdeněk", "Václav", "Michal", "František", "Jakub", "Milan", "Karel", "Lukáš", "David", "Vladimír", "Ondřej", "Ladislav", "Roman", "Marek", "Stanislav", "Daniel", "Radek", "Antonín", "Vojtěch", "Filip", "Adam", "Matěj", "Dominik", "Aleš", "Miloslav", "Jaromír", "Patrik", "Libor", "Jindřich", "Vlastimil", "Miloš", "Lubomír", "Štěpán", "Oldřich", "Rudolf", "Matyáš", "Ivan", "Robert", "Luboš", "Radim", "Richard"];
@@ -9,10 +9,10 @@ function main(dataIn) {
     const WORKLOAD = [10, 20, 30, 40];
 
     startDate = new Date(Date.now());
-    startDate.setFullYear(startDate.getFullYear() - dataIn.age.max);
+    startDate.setFullYear(startDate.getFullYear() - dtoIn.age.max);
 
     endDate = new Date(Date.now());
-    endDate.setFullYear(endDate.getFullYear() - dataIn.age.min);
+    endDate.setFullYear(endDate.getFullYear() - dtoIn.age.min);
 
     function getRandomDate(startDate, endDate) {
 
@@ -42,13 +42,13 @@ function main(dataIn) {
         this.workload = WORKLOAD[Math.floor(Math.random() * WORKLOAD.length)];
     }
 
-    if (dataIn && typeof dataIn.count === 'number') {
-        for (let i = 0; i < dataIn.count; i++) {
-            dataOut.push(new Employee());
+    if (dtoIn && typeof dtoIn.count === 'number') {
+        for (let i = 0; i < dtoIn.count; i++) {
+            dtoOut.push(new Employee());
         }
     }
 
-    return dataOut;
+    return dtoOut;
 }
 
 const dtoIn = {
