@@ -11,9 +11,31 @@ const employees = [
         birthdate: "1994-08-07T00:00:00.000Z",
         name: "Jan",
         surname: "Novák",
+        workload: 10
+    },
+    {
+        gender: "male",
+        birthdate: "1989-08-07T00:00:00.000Z",
+        name: "Marek",
+        surname: "Svoboda",
+        workload: 40
+    },
+    {
+        gender: "male",
+        birthdate: "2002-08-07T00:00:00.000Z",
+        name: "Otakar",
+        surname: "Pavel",
+        workload: 30
+    },
+    {
+        gender: "female",
+        birthdate: "2004-08-07T00:00:00.000Z",
+        name: "Julia",
+        surname: "Smetana",
         workload: 40
     }
 ];
+
 
 function calculateAge(birthdate) {
     const birthDateObj = new Date(birthdate);
@@ -33,12 +55,45 @@ function calculateAverageAge(employees) {
     return averageAge;
 }
 
-const averageAge = calculateAverageAge(employees);
-console.log("Average age of employees:", averageAge);
+const employeeAges = employees.map(employee => calculateAge(employee.birthdate));
+const employeeWorkloads = [];
+employees.forEach(employee => { employeeWorkloads.push(employee.workload) });
 
-const now = new Date();
-console.log(now)
+function calculateMedian(array) {
+    const sortedArray = array.sort((a, b) => a - b);
+    const middleIndex = Math.floor(sortedArray.length / 2);
 
-const then = new Date('2000-01-03T00:00:00.000Z');
-console.log(then)
-console.log(now - then)
+    if (sortedArray.length % 2 === 0) {
+        return (sortedArray[middleIndex - 1] + sortedArray[middleIndex]) / 2;
+    } else {
+        return sortedArray[middleIndex];
+    }
+}
+
+function calculateAverageGenderWorkload(employees, gender) {
+    let totalWorkload = 0;
+    let genderCount = 0;
+  
+    employees.forEach(employee => {
+      if (employee.gender === gender) {
+        totalWorkload += employee.workload;
+        genderCount++;
+      }
+    });
+  
+    if (genderCount === 0) {
+      return 0;
+    }
+  
+    const averageGenderWorkload = totalWorkload / genderCount;
+    const roundedAverageGenderWorkload = Math.round(averageGenderWorkload  * 10) / 10;
+    return roundedAverageGenderWorkload;
+  }
+
+  const averageWomenWorkload = calculateAverageGenderWorkload(employees, "female");
+  const averageMenWorkload = calculateAverageGenderWorkload(employees, "male");
+  // console.log(averageWomenWorkload);
+  // console.log(averageMenWorkload);
+
+  const sortedByWorkforce = employees.sort((a, b) => a.workload - b.workload);
+  console.log(sortedByWorkforce)

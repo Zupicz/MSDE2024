@@ -83,6 +83,41 @@ function main(dtoIn) {
             return result;
         }
 
+        const employeeAges = inputList.map(employee => calculateAge(employee.birthdate));
+        const employeeWorkloads = [];
+        inputList.forEach(employee => { employeeWorkloads.push(employee.workload) });
+
+        function calculateMedian(array) {
+            const sortedArray = array.sort((a, b) => a - b);
+            const middleIndex = Math.floor(sortedArray.length / 2);
+
+            if (sortedArray.length % 2 === 0) {
+                return (sortedArray[middleIndex - 1] + sortedArray[middleIndex]) / 2;
+            } else {
+                return sortedArray[middleIndex];
+            }
+        }
+
+        function calculateAverageGenderWorkload(employees, gender) {
+            let totalWorkload = 0;
+            let genderCount = 0;
+
+            employees.forEach(employee => {
+                if (employee.gender === gender) {
+                    totalWorkload += employee.workload;
+                    genderCount++;
+                }
+            });
+
+            if (genderCount === 0) {
+                return 0;
+            }
+
+            const averageGenderWorkload = totalWorkload / genderCount;
+            const roundedAverageGenderWorkload = Math.round(averageGenderWorkload * 10) / 10;
+            return roundedAverageGenderWorkload;
+        }
+
         const employeeStatistics = {
             total: inputList.length,
             workload10: countElementsByProperty(inputList, "workload", 10),
@@ -91,7 +126,11 @@ function main(dtoIn) {
             workload40: countElementsByProperty(inputList, "workload", 40),
             averageAge: calculateAverageAge(inputList),
             minAge: getMinMaxAge(inputList)[0],
-            maxAge: getMinMaxAge(inputList)[1]
+            maxAge: getMinMaxAge(inputList)[1],
+            medianAge: calculateMedian(employeeAges),
+            medianWorkload: calculateMedian(employeeWorkloads),
+            averageWomenWorkload: calculateAverageGenderWorkload(inputList, "female"),
+            sortedByWorkload: inputList.sort((a, b) => a.workload - b.workload)
         }
         return employeeStatistics;
     }
@@ -109,43 +148,3 @@ const dtoIn = {
 }
 
 let newEmployees = main(dtoIn);
-//console.log(Object.entries(newEmployees));
-console.log(newEmployees);
-
-/*
-for (i = 0; i < newEmployees.length; i++) {
-    console.log(newEmployees[i])
-}
-*/
-
-/*
-const dtoOut = {
-    total: 50,
-    workload10: 13,
-    workload20: 12,
-    workload30: 10,
-    workload40: 15
-    averageAge: 33.6,
-    minAge: 19,
-    maxAge: 55,
-    medianAge: 38,
-    medianWorkload: 28,
-    averageWomenWorkload: 26,
-    sortedByWorkload: [
-      {
-        gender: "female",
-        birthdate: "2000-01-03T00:00:00.000Z",
-        name: "Jana",
-        surname: "Nováková",
-        workload: 20
-      },
-      {
-        gender: "male",
-        birthdate: "2000-08-07T00:00:00.000Z",
-        name: "Jan",
-        surname: "Novák",
-        workload: 40
-      }
-    ]
-  }
-    */
