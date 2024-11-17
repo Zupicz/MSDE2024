@@ -48,14 +48,40 @@ function main(dtoIn) {
     }
 
     const employeeDataList = generateEmployeeData(dtoIn);
-    // return employeeDataList;
 
     function getEmployeeStatistics(inputList) {
 
         function countElementsByProperty(object, property, value) {
             const filteredArray = Object.values(object).filter(item => item[property] === value);
             return filteredArray.length;
-          }
+        }
+
+        function calculateAge(birthdate) {
+            const birthDateObj = new Date(birthdate);
+            const today = new Date();
+            const ageInMilliseconds = today - birthDateObj;
+            const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25));
+            return ageInYears;
+        }
+
+        function calculateAverageAge(employees) {
+            let totalAge = 0;
+            employees.forEach(employee => { totalAge += calculateAge(employee.birthdate) });
+
+            const averageAge = totalAge / employees.length;
+            const roundedAverageAge = Math.round(averageAge * 10) / 10;
+            return roundedAverageAge;
+        }
+
+        function getMinMaxAge(employees) {
+            let employeeAges = [];
+            employees.forEach(employee => { employeeAges.push(calculateAge(employee.birthdate)) });
+
+            let maximum = Math.max(...employeeAges);
+            let minimum = Math.min(...employeeAges);
+            let result = ([minimum, maximum]);
+            return result;
+        }
 
         const employeeStatistics = {
             total: inputList.length,
@@ -63,11 +89,14 @@ function main(dtoIn) {
             workload20: countElementsByProperty(inputList, "workload", 20),
             workload30: countElementsByProperty(inputList, "workload", 30),
             workload40: countElementsByProperty(inputList, "workload", 40),
+            averageAge: calculateAverageAge(inputList),
+            minAge: getMinMaxAge(inputList)[0],
+            maxAge: getMinMaxAge(inputList)[1]
         }
         return employeeStatistics;
     }
-    
-    dtoOut = getEmployeeStatistics(employeeDataList);
+
+    const dtoOut = getEmployeeStatistics(employeeDataList);
     return dtoOut;
 }
 
@@ -80,7 +109,9 @@ const dtoIn = {
 }
 
 let newEmployees = main(dtoIn);
-console.log(newEmployees)
+//console.log(Object.entries(newEmployees));
+console.log(newEmployees);
+
 /*
 for (i = 0; i < newEmployees.length; i++) {
     console.log(newEmployees[i])
