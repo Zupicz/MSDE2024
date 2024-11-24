@@ -9,10 +9,10 @@ function main(dtoIn) {
         const FEMALE_SURNAMES_LIST = ["Nováková", "Svobodová", "Novotná", "Dvořáková", "Černá", "Procházková", "Kučerová", "Veselá", "Horáková", "Němcová", "Marková", "Pospíšilová", "Pokorná", "Hájková", "Králová", "Jelínková", "Růžičková", "Benešová", "Fialová", "Sedláčková", "Doležalová", "Zemanová", "Kolářová", "Navrátilová", "Čermáková", "Vaňková", "Urbanová", "Blažková", "Křížová", "Kovářová", "Kratochvílová", "Bartošová", "Vlčková", "Poláková", "Musilová", "Kopecká", "Šimková", "Konečná", "Malá", "Holubová", "Čechová", "Štěpánková", "Staňková", "Kadlecová", "Dostálová", "Soukupová", "Šťastná", "Marešová", "Moravcová", "Sýkorová"];
         const WORKLOAD = [10, 20, 30, 40];
 
-        startDate = new Date(Date.now());
+        let startDate = new Date(Date.now());
         startDate.setFullYear(startDate.getFullYear() - dtoIn.age.max);
 
-        endDate = new Date(Date.now());
+        let endDate = new Date(Date.now());
         endDate.setFullYear(endDate.getFullYear() - dtoIn.age.min);
 
         function getRandomDate(startDate, endDate) {
