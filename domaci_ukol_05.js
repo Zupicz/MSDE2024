@@ -68,7 +68,6 @@ function main(dtoIn) {
           inputList.forEach((employee) => {
             const { gender, name, workload } = employee;
         
-            // Count and populate chart data
             for (const category in names) {
               if (category === 'all' || (category === 'male' && gender === 'male') || (category === 'female' && gender === 'female') || (category === 'femalePartTime' && gender === 'female' && workload < 40) || (category === 'maleFullTime' && gender === 'male' && workload === 40)) {
                 names[category][name] = (names[category][name] || 0) + 1;
